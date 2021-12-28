@@ -14,7 +14,7 @@
     <Category>MediaApp:Video MediaApp:Music MediaApp:Photos MediaServer:Video MediaServer:Music MediaServer:Photos</Category>
     <WebUI>http://[IP]:[PORT:8080]/</WebUI>
     <TemplateURL/>
-    <Icon>https://raw.githubusercontent.com/OpenSageTV/sagetv-dockers/master/resources/OpenSageTV_icon.png</Icon>
+    <Icon>https://raw.githubusercontent.com/OpenSageTV/sagetv-dockers/master/resources/SageTVOS_icon.png</Icon>
     <ExtraParams/>
     <Description>
         SageTV is an Open Source PVR and Media Player[br][br]
