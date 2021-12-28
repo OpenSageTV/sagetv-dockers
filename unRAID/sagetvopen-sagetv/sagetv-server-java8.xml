@@ -4,7 +4,7 @@
     <Name>sagetvopen-sagetv-server-java8</Name>
     <Repository>sagetvopen/sagetv-server-java8</Repository>
     <Registry>https://hub.docker.com/r/sagetvopen/sagetv-server-java8/</Registry>
-    <GitHub>https://github.com/stuckless/sagetv-dockers/tree/master/unRAID/stuckless-sagetv/</GitHub>
+    <GitHub>https://github.com/OpenSageTV/sagetv-dockers/tree/master/unRAID/sagetvopen-sagetv/</GitHub>
     <Network>host</Network>
     <Privileged>true</Privileged>
     <Support>http://forums.sagetv.com/forums/showthread.php?p=587908</Support>
@@ -14,9 +14,8 @@
     <Category>MediaApp:Video MediaApp:Music MediaApp:Photos MediaServer:Video MediaServer:Music MediaServer:Photos</Category>
     <WebUI>http://[IP]:[PORT:8080]/</WebUI>
     <TemplateURL/>
-    <Icon>https://raw.githubusercontent.com/OpenSageTV/sagetv-miniclient/master/playstore/ic_launcher-web.png</Icon>
+    <Icon>https://raw.githubusercontent.com/OpenSageTV/sagetv-dockers/master/resources/OpenSageTV_icon.png</Icon>
     <ExtraParams/>
-
     <Description>
         SageTV is an Open Source PVR and Media Player[br][br]
         [b][u][span style='color: #E80000;']Configuration[/span][/u][/b][br]

@@ -33,4 +33,4 @@ read -r -d '' OVERVIEW <<- EOM
 EOM
 export OVERVIEW
 export SUPPORT="http://forums.sagetv.com/forums/showthread.php?p=587908"
-export GITHUB="https://github.com/stuckless/sagetv-dockers/tree/master/unRAID/stuckless-sagetv/"
+export GITHUB="https://github.com/OpenSageTV/sagetv-dockers/tree/master/unRAID/sagetvopen-sagetv/"
