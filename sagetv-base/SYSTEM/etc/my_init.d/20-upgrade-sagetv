@@ -1,20 +1,72 @@
 #!/usr/bin/env bash
 
 # Options
+SAGE_START=startsage
+SAGE_HOME=${SAGE_HOME:-/opt/sagetv/server}
 VERSION=${VERSION:-latest}
-
-# SageTV Version
-SAGE_VERSION=""
-if [ "${VERSION}" = "latest" ] ; then
-    SAGE_VERSION=`curl https://github.com/OpenSageTV/sagetv-linux/releases/latest | sed 's/^.*[^0-9]\([0-9]*\.[0-9]*\.[0-9]*\.[0-9]*\).*$/\1/' | egrep -e '9\.[0-9]+' | sort -V | tail -1`
-else
-    SAGE_VERSION=${VERSION}
-fi
-
-SAGE_VERSION_BASE=`echo "${SAGE_VERSION}" | sed 's/\.[^.]*$//'`
-SAGE_SERVER_TGZ_URL="https://github.com/OpenSageTV/sagetv-linux/releases/download/9.2.5.168/sagetv-server_9.2.5_amd64.tar.gz"
-SAGE_SERVER_TGZ="sagetvserver-${SAGE_VERSION}.tgz"
+GITHUB_REPO="OpenSageTV/sagetv-linux"
+FILENAME_PREFIX="sagetv-server"
+FILE_TYPE="tar.gz"
 SAGE_CUR_VERSION_FILE=".SAGE_CUR_VERSION"
+
+# ------------------------------------------------------ #
+
+
+# Searches the given GitHub repository for the most recent tagged release containing a file of the given type, with the given prefix
+# The tagged version is returned in the TARGET_TAG global variable
+findLatestRelease() 
+{
+  local GITHUB_REPO=$1
+  local FILENAME_PREFIX=$2
+  local FILE_TYPE=$3
+  local INCLUDE_PRE_RELEASE_VERSIONS=$4
+
+  local LATEST_TAG=`curl -s https://api.github.com/repos/${GITHUB_REPO}/releases | \
+      jq --arg MATCH_FILENAME_PREFIX "${FILENAME_PREFIX}" --arg MATCH_FILENAME_EXT ".${FILE_TYPE}" --arg ALLOW_PRE_RELEASE ${INCLUDE_PRE_RELEASE_VERSIONS} -r \
+      '[.[] | 
+      select(.draft != true) |
+      select((.prerelease != true) or $ALLOW_PRE_RELEASE) |
+      select((.assets | length) > 0) | 
+      select(.assets | .[] | .name | (startswith($MATCH_FILENAME_PREFIX) and endswith($MATCH_FILENAME_EXT))) |
+      .tag_name
+      ][0]'`
+
+  if [ "${LATEST_TAG}" = "" ] || [ "${LATEST_TAG}" = "null" ]; then
+    FOUND_TAG=""
+    return 1
+  fi
+
+  FOUND_TAG=${LATEST_TAG}
+  return 0
+}
+
+# Searches the given GitHub repository for the most recent tagged release containing a file of the given type, with the given prefix
+# The tagged version is returned in the FOUND_DOWNLOAD_URL global variable
+findDownloadUrl() {
+  local GITHUB_REPO=$1
+  local FILENAME_PREFIX=$2
+  local FILE_TYPE=$3
+  local TARGET_TAG=$4
+
+  FOUND_DOWNLOAD_URL=`curl -s https://api.github.com/repos/${GITHUB_REPO}/releases | \
+        jq --arg MATCH_FILENAME_PREFIX "${FILENAME_PREFIX}" --arg MATCH_FILENAME_EXT ".${FILE_TYPE}" --arg TAG "${TARGET_TAG}" -r \
+        '[.[] | 
+        select(.draft != true) |
+        select((.assets | length) > 0) | 
+        select(.tag_name == $TAG ) |
+        .assets |
+        .[] |
+        select(.name | (startswith($MATCH_FILENAME_PREFIX) and endswith($MATCH_FILENAME_EXT))) |
+        .browser_download_url
+        ][0]'`
+
+  if [ "${FOUND_DOWNLOAD_URL}" = "null" ] || [ "${FOUND_DOWNLOAD_URL}" = "" ] ; then
+      FOUND_DOWNLOAD_URL=""
+      return 1
+  fi
+  
+  return 0
+}
 
 compareVersions () {
     if [[ $1 == $2 ]]
@@ -47,12 +99,10 @@ compareVersions () {
     return 0
 }
 
-# start command
-SAGE_START=startsage
+# ------------------------------------------------------ #
 
-# set default sagetv home
-SAGE_HOME=${SAGE_HOME:-/opt/sagetv/server}
 
+# Ensure sage home directory exists
 mkdir -p ${SAGE_HOME}
 cd ${SAGE_HOME}
 if [ $? -eq 0 ]; then
@@ -62,9 +112,53 @@ else
     exit 1
 fi
 
+# Check whether we need to upgrade Sage version
+
+# Check for the latest available version on GitHub (unless a specific version is requested)
+# Note that any specific VERSION provided must match the GitHub release tag exactly
+TARGET_TAG=""
+if [ "${VERSION}" = "latest" ] || [ "${VERSION}" = "beta" ] ; then
+
+    if [ "${VERSION}" = "latest" ] ; then
+        echo "Finding latest stable version..."    
+        ALLOW_PRE_RELEASE="false"
+    else
+        echo "Finding latest version (including beta)..."
+        ALLOW_PRE_RELEASE="true"
+    fi
+
+    FOUND_TAG=""
+    if findLatestRelease ${GITHUB_REPO} ${FILENAME_PREFIX} ${FILE_TYPE} ${ALLOW_PRE_RELEASE} ; then
+        echo "$FOUND_TAG is the lastest matching version on ${GITHUB_REPO}"
+        TARGET_TAG=${FOUND_TAG}
+    else
+        echo "Unable to find any matching version on ${GITHUB_REPO}"
+    fi
+
+else
+    echo "Using specified version ${VERSION}..."
+    TARGET_TAG=${VERSION}
+fi
+SAGE_VERSION=${TARGET_TAG}
+SAGE_VERSION_BASE=`echo "${SAGE_VERSION}" | sed 's/\.[^.]*$//'`
+
+# Attempt to find download URL of required SageTV version...
+FOUND_DOWNLOAD_URL=""
+if [ "${TARGET_TAG}" != "" ] ; then
+    echo "Finding download URL for version ${TARGET_TAG}..."
+
+    if findDownloadUrl ${GITHUB_REPO} ${FILENAME_PREFIX} ${FILE_TYPE} ${TARGET_TAG} ; then
+        echo "SageTV Server binary (.${FILE_TYPE}) for ${TARGET_TAG} can be installed from ${FOUND_DOWNLOAD_URL}"
+    else
+        echo "Unable to find suitable ${FILE_TYPE} binary on github repo ${GITHUB_REPO} tagged ${TARGET_TAG}"
+    fi
+fi
+SAGE_SERVER_TGZ_URL=${FOUND_DOWNLOAD_URL}
+SAGE_SERVER_TGZ="sagetvserver-${SAGE_VERSION}.tgz"
+
 # check if offline, and attempt to continue
-if [ "${SAGE_VERSION}" = "" ] ; then
-    echo "Could not check online version.  Trying to continue with currently installed version";
+if [ "${SAGE_VERSION}" = "" ] || [ "${SAGE_SERVER_TGZ_URL}" = "" ]; then
+    echo "Could not perform update. Trying to continue with currently installed version";
     exit 0
 fi
 
@@ -104,9 +198,6 @@ if [ ! -e ${SAGE_START} ] || [ "${UPGRADE}" = "Y" ] || file libSage.so|grep '32-
     rm -f ${SAGE_SERVER_TGZ}
     echo "${SAGE_VERSION}" > ${SAGE_CUR_VERSION_FILE}
     SAGE_CUR_VERSION=${SAGE_VERSION}
-
-    # force setting permissions after install
-    export OPT_SETPERMS=Y
 else
     echo "SageTV Already At Version: ${SAGE_VERSION}, exiting..."
     exit 0

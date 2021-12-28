@@ -1,12 +1,12 @@
 # BUILDING
-# docker build -t stuckless/sagetv-base:latest .
+# docker build -t sagetvopen/sagetv-base:latest .
 
 # Ubuntu 16.04
 FROM phusion/baseimage:0.10.0
 
 CMD ["/sbin/my_init"]
 
-MAINTAINER Sean Stuckless <sean.stuckless@gmail.com>
+MAINTAINER Ken Birch <usjusjoken@gmail.com>
 
 # The docker container version, not SageTV version
 ENV SAGETV_CONTAINER_VERSION="1.0.5" \
@@ -30,7 +30,7 @@ RUN set -x && \
     add-apt-repository -y universe && \
     add-apt-repository ppa:deadsnakes/ppa && \
     apt-get update && \
-    apt-get install -y wget curl libfaad2 net-tools file libargtable2-0 ffmpeg sudo \
+    apt-get install -y wget curl libfaad2 net-tools file libargtable2-0 ffmpeg jq sudo \
         less vim telnet software-properties-common unzip cifs-utils lirc dos2unix python3.6 python3-setuptools && \
     apt-get autoremove -y && \
     apt-get clean && \

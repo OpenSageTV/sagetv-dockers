@@ -1,9 +1,9 @@
 # BUILDING
-# docker build -t stuckless/sagetv-server-java16:latest .
+# docker build -t sagetvopen/sagetv-server-java16:latest .
 
-FROM stuckless/sagetv-base:latest
+FROM sagetvopen/sagetv-base:latest
 
-MAINTAINER Sean Stuckless <sean.stuckless@gmail.com>
+MAINTAINER Ken Birch <usjusjoken@gmail.com>
 
 RUN set -x
 

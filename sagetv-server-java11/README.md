@@ -1,1 +1,1 @@
-This is a Java 8 container for SageTV.  See the [Base README](../sagetv-base/README.md) for information about this container. 
+This is a Java 11 container for SageTV.  See the [Base README](../sagetv-base/README.md) for information about this container. 
