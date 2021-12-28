@@ -42,6 +42,7 @@ fi
 chmod 777 /var/media/videos
 chmod 777 /var/media/pictures
 chmod 777 /var/media/music
+sudo chmod 755 /usr/local/bin/*
 
 /usr/local/bin/startsagecore <&- &
 exit 0

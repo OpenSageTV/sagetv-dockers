@@ -9,7 +9,7 @@ CMD ["/sbin/my_init"]
 MAINTAINER Ken Birch <usjusjoken@gmail.com>
 
 # The docker container version, not SageTV version
-ENV SAGETV_CONTAINER_VERSION="1.0.5" \
+ENV SAGETV_CONTAINER_VERSION="1.1.0" \
     APP_NAME="SageTV Media Server" \
     DEBIAN_FRONTEND=noninteractive \
     LANG=en_US.UTF-8 \
@@ -44,6 +44,7 @@ COPY SYSTEM/ /
 
 RUN chmod 755 /etc/my_init.d/* && \
     chmod 440 /etc/sudoers.d/sagetv-sudo && \
+    chmod 755 /usr/local/bin/* && \
     chmod 755 /usr/bin/wine
 
 VOLUME ["/var/media", "/var/mediaext", "/opt/sagetv"]

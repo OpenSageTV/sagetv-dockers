@@ -21,9 +21,9 @@ fi
 SAGE_HOME=${SAGE_HOME:-/opt/sagetv/server}
 cd ${SAGE_HOME}
 
-wget -O gentuner.tgz https://bintray.com/artifact/download/opensagetv/sagetv-plugins/GenericTunerPluginLinux/gentuner-1.0.1.tgz
-tar -zxvf gentuner.tgz
-rm -f gentuner.tgz
+#wget -O gentuner.tgz https://bintray.com/artifact/download/opensagetv/sagetv-plugins/GenericTunerPluginLinux/gentuner-1.0.1.tgz
+#tar -zxvf gentuner.tgz
+#rm -f gentuner.tgz
 
 echo "Generic Tuner Plugin installed"
 
