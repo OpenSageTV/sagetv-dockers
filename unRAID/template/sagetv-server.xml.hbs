@@ -5,11 +5,14 @@
     <Repository>{{OWNER}}/{{CONTAINER}}-{{CONTAINER_POSTFIX}}</Repository>
     <Registry>https://hub.docker.com/r/{{OWNER}}/{{CONTAINER}}-{{CONTAINER_POSTFIX}}/</Registry>
     <GitHub>{{GITHUB}}</GitHub>
+	<Project>{{PROJECT}}</Project>
+	<DonateText>{{DONATETEXT}}</DonateText>
+    <DonateLink>{{DONATELINK}}</DonateLink>
     <Network>host</Network>
     <Privileged>true</Privileged>
     <Support>{{SUPPORT}}</Support>
     <Overview>
-        {{OVERVIEW}}
+        {{DESCRIPTION}}
     </Overview>
     <Category>{{CATEGORY}}</Category>
     <WebUI>http://[IP]:[PORT:8080]/</WebUI>
@@ -98,7 +101,7 @@
             <Mode/>
         </Variable>
         <Variable>
-            <Value>768</Value>
+            <Value>1024</Value>
             <Name>JAVA_MEM_MB</Name>
             <Mode/>
         </Variable>
@@ -166,7 +169,7 @@
 
     <Config Name="Variable 1" Target="VERSION" Default="latest" Mode="" Description="SageTV Version" Type="Variable"
             Display="always" Required="true" Mask="false">latest</Config>
-    <Config Name="Variable 2" Target="JAVA_MEM_MB" Default="768" Mode="" Description="Java Memory in MB"
+    <Config Name="Variable 2" Target="JAVA_MEM_MB" Default="1024" Mode="" Description="Java Memory in MB"
             Type="Variable" Display="always" Required="false" Mask="false">768</Config>
     <Config Name="Variable 3" Target="LICENCE_DATA" Default="" Mode="" Description="SageTV License Key"
             Type="Variable" Display="always" Required="false" Mask="false"></Config>

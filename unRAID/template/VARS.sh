@@ -6,6 +6,8 @@ export OWNER="sagetvopen"
 export CONTAINER="sagetv-server"
 export CONTAINER_POSTFIX="java8"
 export CONTAINER_VERSION="latest"
+export DONATETEXT="Support me on Patreon"
+export DONATELINK="https://www.patreon.com/user?u=58035567"
 read -r -d '' DESCRIPTION <<- EOM
         SageTV is an Open Source PVR and Media Player[br][br]
         [b][u][span style='color: #E80000;']Configuration[/span][/u][/b][br]
@@ -34,3 +36,4 @@ EOM
 export OVERVIEW
 export SUPPORT="http://forums.sagetv.com/forums/showthread.php?p=587908"
 export GITHUB="https://github.com/OpenSageTV/sagetv-dockers/tree/master/unRAID/sagetvopen-sagetv/"
+export PROJECT="https://github.com/google/sagetv"

@@ -17,3 +17,5 @@ RUN mkdir -p /usr/lib/jvm && \
 ENV JAVA_HOME=/usr/lib/jvm/java-se-8u41-ri \
     PATH=/usr/lib/jvm/java-se-8u41-ri/bin:${PATH}
 
+# Setup the /usr/bin/java alias (used by OpenDCT among other things)
+RUN update-alternatives --install /usr/bin/java java /usr/lib/jvm/java-se-8u41-ri/bin/java 1

@@ -14,9 +14,9 @@ fi
 SAGE_HOME=${SAGE_HOME:-/opt/sagetv/server}
 cd ${SAGE_HOME}
 
-#wget -O commandir.tgz https://bintray.com/artifact/download/opensagetv/sagetv-plugins/CommandIR-AMD64/commandir-1.0.3.1-amd64.tgz
-#tar -zxvf commandir.tgz -C ../../../
-#rm -f commandir.tgz
+wget -O commandir.tgz https://raw.githubusercontent.com/OpenSageTV/sagetv-dockers/master/resources/commandir-1.0.3.1-amd64.tgz
+tar -zxvf commandir.tgz -C ../../../
+rm -f commandir.tgz
 
 if [ -e /opt/sagetv/commandir/bin ] ; then
     chown -Rv root:sagetv /opt/sagetv/commandir/bin
