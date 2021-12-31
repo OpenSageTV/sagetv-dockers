@@ -13,6 +13,9 @@ RUN mkdir -p /usr/lib/jvm && \
     tar -zxvf openjdk-8u41-b04-linux-x64-14_jan_2020.tar.gz && \
     rm -f openjdk-8u41-b04-linux-x64-14_jan_2020.tar.gz
 
+# Copy cacerts from jdk 11 to /usr/lib/jvm/java-se-8u41-ri/jre/lib/security
+COPY JAVACERT/ /
+
 # Define commonly used JAVA_HOME variable
 ENV JAVA_HOME=/usr/lib/jvm/java-se-8u41-ri \
     PATH=/usr/lib/jvm/java-se-8u41-ri/bin:${PATH}
