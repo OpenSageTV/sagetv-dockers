@@ -57,6 +57,11 @@ if [[ "$JAVA_VERSION" == "16" || "$JAVA_VERSION" == "11" ]] ; then
     JAVAOPTS="$JAVAOPTS --add-opens java.base/jdk.internal=ALL-UNNAMED --add-exports java.base/jdk.internal=ALL-UNNAMED"
 fi
 
+# testing of javascript with Java 16
+#if [[ "$JAVA_VERSION" == "16" ]] ; then
+#    JAVAOPTS="$JAVAOPTS -XX:+UnlockExperimentalVMOptions -XX:+EnableJVMCI -XX:+UseJVMCICompiler"
+#fi
+
 while [ $restartApp -eq 1 ]; do
 	restartApp=0
 	if [ -e stageddeletes.txt ] || [ -e stagedrenames.txt ] ; then

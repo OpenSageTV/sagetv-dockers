@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <Container version="2">
-    <Beta>True</Beta>
+    <Beta>False</Beta>
     <Name>sagetvopen-sagetv-server-java8</Name>
     <Repository>sagetvopen/sagetv-server-java8</Repository>
     <Registry>https://hub.docker.com/r/sagetvopen/sagetv-server-java8/</Registry>

@@ -13,4 +13,4 @@
 # 8. ./gradlew bintrayUpload
 
 docker rm sagetv-build
-docker run --name sagetv-build -t -v `pwd`/SOURCES/sagetv:/build stuckless/sagetv-build
+docker run --name sagetv-build -t -v `pwd`/SOURCES/sagetv:/build sagetvopen/sagetv-build

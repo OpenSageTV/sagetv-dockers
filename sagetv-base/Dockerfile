@@ -2,14 +2,16 @@
 # docker build -t sagetvopen/sagetv-base:latest .
 
 # Ubuntu 16.04
-FROM phusion/baseimage:0.10.0
+# FROM phusion/baseimage:0.10.0
+# FROM phusion/baseimage:18.04-1.0.0
+FROM phusion/baseimage:master
 
 CMD ["/sbin/my_init"]
 
 MAINTAINER Ken Birch <usjusjoken@gmail.com>
 
 # The docker container version, not SageTV version
-ENV SAGETV_CONTAINER_VERSION="1.1.0" \
+ENV SAGETV_CONTAINER_VERSION="1.2.0" \
     APP_NAME="SageTV Media Server" \
     DEBIAN_FRONTEND=noninteractive \
     LANG=en_US.UTF-8 \

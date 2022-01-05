@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-docker build -t stuckless/sagetv-build:latest .
+docker build -t sagetvopen/sagetv-build:latest .

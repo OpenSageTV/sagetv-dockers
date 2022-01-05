@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
-docker login --username=stuckless --email=sean.stuckless@gmail.com
-docker push stuckless/sagetv-build
+docker login --username=jusjoken --email=usjusjoken@gmail.com
+docker push sagetvopen/sagetv-build
