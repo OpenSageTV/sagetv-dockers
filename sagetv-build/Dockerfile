@@ -7,7 +7,8 @@
 # Thanks to coppit, since his sagetv docker container was the basis for this
 
 #FROM adoptopenjdk/openjdk9:jdk-9.0.4.11
-FROM adoptopenjdk/openjdk11:jdk-11.0.11_9
+#FROM adoptopenjdk/openjdk11:jdk-11.0.11_9
+FROM sagetvopen/ubuntu18-jdk11
 
 MAINTAINER Ken Birch <usjusjoken@gmail.com>
 

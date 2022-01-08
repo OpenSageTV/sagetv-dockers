@@ -194,7 +194,7 @@
     <Config Name="Variable 1" Target="VERSION" Default="latest" Mode="" Description="SageTV Version" Type="Variable"
             Display="always" Required="true" Mask="false">latest</Config>
     <Config Name="Variable 2" Target="JAVA_MEM_MB" Default="1024" Mode="" Description="Java Memory in MB"
-            Type="Variable" Display="always" Required="false" Mask="false">768</Config>
+            Type="Variable" Display="always" Required="false" Mask="false">1024</Config>
     <Config Name="Variable 3" Target="LICENCE_DATA" Default="" Mode="" Description="SageTV License Key"
             Type="Variable" Display="always" Required="false" Mask="false"></Config>
     <Config Name="Variable 4" Target="OPT_GENTUNER" Default="Y" Mode="" Description="Install Gentuner Plugin"

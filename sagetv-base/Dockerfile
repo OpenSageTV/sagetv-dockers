@@ -49,7 +49,7 @@ RUN chmod 755 /etc/my_init.d/* && \
     chmod 755 /usr/local/bin/* && \
     chmod 755 /usr/bin/wine
 
-VOLUME ["/var/media", "/var/mediaext", "/opt/sagetv"]
+VOLUME ["/var/tv", "/var/media", "/var/mediaext", "/opt/sagetv"]
 
 # Client (TCP 42024 for connecting, TCP 7818 for streaming, UDP 8270 for finding servers)
 # All extenders (UDP 31100 for discovery, TCP 31099 for connections?)

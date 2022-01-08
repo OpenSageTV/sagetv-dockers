@@ -1,0 +1,165 @@
+#!/usr/bin/env bash
+
+# Options
+OPENDCT_VERSION=${OPENDCT_VERSION:-latest}
+OPENDCT_GITHUB_REPO="enternoescape/opendct"
+OPENDCT_FILENAME_PREFIX="opendct"
+OPENDCT_FILE_TYPE="deb"
+OPENDCT_CUR_INSTALL_FILE="/etc/opendct/.OPENDCT_CUR_INSTALL"
+OPENDCT_START=startopendct
+
+# Searches the given GitHub repository for the most recent tagged release containing a file of the given type, with the given prefix
+# The tagged version is returned in the TARGET_TAG global variable
+findLatestRelease() 
+{
+  local GITHUB_REPO=$1
+  local FILENAME_PREFIX=$2
+  local FILE_TYPE=$3
+  local INCLUDE_PRE_RELEASE_VERSIONS=$4
+
+  local LATEST_TAG=`curl -s https://api.github.com/repos/${GITHUB_REPO}/releases | \
+      jq --arg MATCH_FILENAME_PREFIX "${FILENAME_PREFIX}" --arg MATCH_FILENAME_EXT ".${FILE_TYPE}" --arg ALLOW_PRE_RELEASE ${INCLUDE_PRE_RELEASE_VERSIONS} -r \
+      '[.[] | 
+      select(.draft != true) |
+      select((.prerelease != true) or $ALLOW_PRE_RELEASE) |
+      select((.assets | length) > 0) | 
+      select(.assets | .[] | .name | (startswith($MATCH_FILENAME_PREFIX) and endswith($MATCH_FILENAME_EXT))) |
+      .tag_name
+      ][0]'`
+
+  if [ "${LATEST_TAG}" = "" ] || [ "${LATEST_TAG}" = "null" ]; then
+    FOUND_TAG=""
+    return 1
+  fi
+
+  FOUND_TAG=${LATEST_TAG}
+  return 0
+}
+
+# Searches the given GitHub repository for the most recent tagged release containing a file of the given type, with the given prefix
+# The tagged version is returned in the APP_DOWNLOAD_URL global variable
+findDownloadUrl() {
+  local GITHUB_REPO=$1
+  local FILENAME_PREFIX=$2
+  local FILE_TYPE=$3
+  local TARGET_TAG=$4
+
+  FOUND_DOWNLOAD_URL=`curl -s https://api.github.com/repos/${GITHUB_REPO}/releases | \
+        jq --arg MATCH_FILENAME_PREFIX "${FILENAME_PREFIX}" --arg MATCH_FILENAME_EXT ".${FILE_TYPE}" --arg TAG "${TARGET_TAG}" -r \
+        '[.[] | 
+        select(.draft != true) |
+        select((.assets | length) > 0) | 
+        select(.tag_name == $TAG ) |
+        .assets |
+        .[] |
+        select(.name | (startswith($MATCH_FILENAME_PREFIX) and endswith($MATCH_FILENAME_EXT))) |
+        .browser_download_url
+        ][0]'`
+
+  if [ "${FOUND_DOWNLOAD_URL}" = "null" ] || [ "${FOUND_DOWNLOAD_URL}" = "" ] ; then
+      FOUND_DOWNLOAD_URL=""
+      return 1
+  fi
+  
+  return 0
+}
+
+# Check whether we need to install/upgrade OpenDCT
+
+# Check for the latest available version on GitHub (unless a specific version is requested)
+# Note that any specific VERSION provided must match the GitHub release tag exactly
+OPENDCT_TARGET_TAG=""
+if [ "${OPENDCT_VERSION}" = "latest" ] || [ "${OPENDCT_VERSION}" = "beta" ] ; then
+
+    if [ "${OPENDCT_VERSION}" = "latest" ] ; then
+        echo "Finding latest stable version..."    
+        OPENDCT_ALLOW_PRE_RELEASE="false"
+    else
+        echo "Finding latest version (including beta)..."
+        OPENDCT_ALLOW_PRE_RELEASE="true"
+    fi
+
+    FOUND_TAG=""
+    if findLatestRelease ${OPENDCT_GITHUB_REPO} ${OPENDCT_FILENAME_PREFIX} ${OPENDCT_FILE_TYPE} ${OPENDCT_ALLOW_PRE_RELEASE} ; then
+        echo "$FOUND_TAG is the lastest matching version on ${OPENDCT_GITHUB_REPO}"
+        OPENDCT_TARGET_TAG=${FOUND_TAG}
+    else
+        echo "Unable to find any matching version on ${OPENDCT_GITHUB_REPO}"
+    fi
+
+else
+    echo "Using specified version ${OPENDCT_VERSION}..."
+    OPENDCT_TARGET_TAG=${OPENDCT_VERSION}
+fi
+
+# Attempt to find download URL of required OpenDCT version...
+FOUND_DOWNLOAD_URL=""
+if [ "${OPENDCT_TARGET_TAG}" != "" ] ; then
+    echo "Finding download URL for version ${OPENDCT_TARGET_TAG}..."
+
+    if findDownloadUrl ${OPENDCT_GITHUB_REPO} ${OPENDCT_FILENAME_PREFIX} ${OPENDCT_FILE_TYPE} ${OPENDCT_TARGET_TAG} ; then
+        echo "OpenDCT binary (.${OPENDCT_FILE_TYPE}) for ${OPENDCT_TARGET_TAG} can be installed from ${FOUND_DOWNLOAD_URL}"
+    else
+        echo "Unable to find suitable ${OPENDCT_FILE_TYPE} binary on github repo ${OPENDCT_GITHUB_REPO} tagged ${OPENDCT_TARGET_TAG}"
+    fi
+fi
+OPENDCT_URL=${FOUND_DOWNLOAD_URL}
+OPENDCT_LOCAL_DEB=opendct_amd64.deb
+
+# check if offline, and attempt to continue
+if [ "${OPENDCT_URL}" = "" ]; then
+    echo "Could not perform update. Trying to continue with currently installed version";
+else
+
+    # Check what we (supposedly) currently have installed, if anything...
+    OPENDCT_CUR_INSTALL=""
+    if [ -e ${OPENDCT_CUR_INSTALL_FILE} ] ; then
+        OPENDCT_CUR_INSTALL=`cat ${OPENDCT_CUR_INSTALL_FILE}`
+    fi
+
+    # Install Opendct
+    if [ "${OPENDCT_CUR_INSTALL}" = "" ] && [ "${OPENDCT_URL}" = "" ] ; then
+        echo "Unable to find suitable OpenDCT binary to install"
+    elif [ "${OPENDCT_CUR_INSTALL}" = "${OPENDCT_URL}" ] ; then
+        echo "Currently installed version of OpenDCT matches preferred version available on github repo ${GITHUB_REPO}"
+    else
+        echo "Installing OpenDCT from ${OPENDCT_URL}..."
+
+        wget -O ${OPENDCT_LOCAL_DEB} ${OPENDCT_URL}
+        dpkg -i --force-confold ${OPENDCT_LOCAL_DEB}
+        rm -f ${OPENDCT_LOCAL_DEB}
+    
+        # Set to use media server consumer, so we don't have to have access to recording location.
+		# moved below to after setting permissions
+        #echo -e "\nconsumer.dynamic.default=opendct.consumer.MediaServerConsumerImpl\n" >> /etc/opendct/conf/opendct.properties
+
+        # Record the installed version to prevent reinstallation every time the container starts
+        echo "${OPENDCT_URL}" > ${OPENDCT_CUR_INSTALL_FILE}    
+
+        echo "OpenDCT Install Complete :-)"
+    fi
+fi
+
+# Set up some permissions - do this each time to ensure all is correct
+echo "Ensuring OpenDCT permissions are correct..."
+chown -Rv sagetv:sagetv /opt/opendct
+chown -Rv sagetv:sagetv /etc/opendct
+chown -Rv sagetv:sagetv /var/log/opendct
+chown -v root:sagetv /var/run
+mkdir /var/run
+mkdir /var/run/opendct
+chmod 775 /var/run/
+chmod 775 /run/
+chmod 775 /opt/opendct
+chmod 775 /etc/opendct
+
+# Set to use media server consumer, so we don't have to have access to recording location.
+echo "Setting OpenDCT to use media server consumer."
+echo -e "\nconsumer.dynamic.default=opendct.consumer.MediaServerConsumerImpl\n" >> /etc/opendct/conf/opendct.properties
+
+
+#echo "Enabling OpenDCT daemon..."
+#cp -f -T /etc/service/opendct/run.template /etc/service/opendct/run
+#chmod 775 /etc/service/opendct/run
+
+exit 0

@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+#Set Permissions for folder/files
+chmod -R 777 /etc/opendct
+chmod -R 777 /opt/opendct
+chmod -R 777 /var/log/opendct
+chmod -R 777 /var/run/opendct
+
+#Run opendct in console mode without waiting for it to complete
+sudo -u sagetv /opt/opendct/console-only &
+sleep 30
