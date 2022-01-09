@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<Container version="2">
+    <Beta>{{BETA}}</Beta>
+    <Date>{{TEMPLATE_DATE}}</Date>
+    <Name>{{OWNER}}-{{CONTAINER}}</Name>
+    <Repository>{{OWNER}}/{{CONTAINER}}</Repository>
+    <Registry>https://hub.docker.com/r/{{OWNER}}/{{CONTAINER}}/</Registry>
+    <GitHub>{{GITHUB}}</GitHub>
+	<Project>{{ODCT_PROJECT}}</Project>
+	<DonateText>{{DONATETEXT}}</DonateText>
+    <DonateLink>{{DONATELINK}}</DonateLink>
+    <Network>host</Network>
+    <Privileged>true</Privileged>
+    <Support>{{ODCT_SUPPORT}}</Support>
+    <Overview>
+        {{ODCT_OVERVIEW}}
+    </Overview>
+    <Category>{{ODCT_CATEGORY}}</Category>
+    <WebUI>http://[IP]:[PORT:8080]/</WebUI>
+    <TemplateURL/>
+    <Icon>https://raw.githubusercontent.com/OpenSageTV/sagetv-dockers/master/resources/SageTVOS_icon.png</Icon>
+    <Banner>https://raw.githubusercontent.com/OpenSageTV/sagetv-dockers/master/resources/SageTVOS_icon.png</Banner>
+    <ExtraParams/>
+    <Description>
+        {{ODCT_DESCRIPTION}}
+    </Description>
+    <Networking>
+        <Mode>host</Mode>
+    </Networking>
+    <Data>
+        <Volume>
+            <HostDir>/mnt/user/appdata/opendct/etc</HostDir>
+            <ContainerDir>/etc/opendct</ContainerDir>
+            <Mode>rw</Mode>
+        </Volume>
+        <Volume>
+            <HostDir>/mnt/user/appdata/opendct/log</HostDir>
+            <ContainerDir>/var/log/opendct</ContainerDir>
+            <Mode>rw</Mode>
+        </Volume>
+        <Volume>
+            <HostDir>/mnt/user/appdata/opendct/opt</HostDir>
+            <ContainerDir>/opt/opendct</ContainerDir>
+            <Mode>rw</Mode>
+        </Volume>
+    </Data>
+    <Environment>
+        <Variable>
+            <Value>latest</Value>
+            <Name>VERSION</Name>
+            <Mode/>
+        </Variable>
+    </Environment>
+    <Config Name="OpenDCT Version" Target="VERSION" Default="latest" Mode="" Description="OpenDCT Version" Type="Variable"
+            Display="always" Required="true" Mask="false">latest</Config>
+    <Config Name="OpenDCT Configuration" Target="/etc/opendct" Default="/mnt/user/appdata/opendct/etc" Mode="rw" Description="Configuration" Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/opendct/etc</Config>
+    <Config Name="OpenDCT Log" Target="/var/log/opendct" Default="/mnt/user/appdata/opendct/log" Mode="rw" Description="Log" Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/opendct/log</Config>
+    <Config Name="OpenDCT Home" Target="/opt/opendct" Default="/mnt/user/appdata/opendct/opt" Mode="rw" Description="OpenDCT Home" Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/opendct/opt</Config>
+</Container>

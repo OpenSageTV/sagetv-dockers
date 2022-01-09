@@ -9,10 +9,14 @@ if [ "$1" = "" ] ; then
     docker build -t sagetvopen/sagetv-base:latest sagetv-base/ && \
     docker build -t sagetvopen/sagetv-server-java8:latest sagetv-server-java8/ && \
     docker build -t sagetvopen/sagetv-server-java11:latest sagetv-server-java11/ && \
-    docker build -t sagetvopen/sagetv-server-java16:latest sagetv-server-java16/
-    # canot be built
-    # docker build -t stuckless/sagetv-server-java7:latest sagetv-server-java7/ && \
-    # docker build -t stuckless/sagetv-server-java9:latest sagetv-server-java9/ && \
+    docker build -t sagetvopen/sagetv-server-java16:latest sagetv-server-java16/ && \
+    docker build -t sagetvopen/sagetv-opendct:latest sagetv-opendct/ && \
+	export javanum=8 && \
+	docker build --build-arg javaversion=$javanum -t sagetvopen/sagetv-server-opendct-java$javanum:latest sagetv-server-opendct/ && \
+	export javanum=11 && \
+	docker build --build-arg javaversion=$javanum -t sagetvopen/sagetv-server-opendct-java$javanum:latest sagetv-server-opendct/ && \
+	export javanum=16 && \
+	docker build --build-arg javaversion=$javanum -t sagetvopen/sagetv-server-opendct-java$javanum:latest sagetv-server-opendct/
     echo "Dockers are built"
 else
     DOCKERDIR=`basename $1`

@@ -11,7 +11,7 @@ CMD ["/sbin/my_init"]
 MAINTAINER Ken Birch <usjusjoken@gmail.com>
 
 # The docker container version, not SageTV version
-ENV SAGETV_CONTAINER_VERSION="1.2.0" \
+ENV SAGETV_CONTAINER_VERSION="2.0.1" \
     APP_NAME="SageTV Media Server" \
     DEBIAN_FRONTEND=noninteractive \
     LANG=en_US.UTF-8 \

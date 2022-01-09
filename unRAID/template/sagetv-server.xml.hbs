@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <Container version="2">
     <Beta>{{BETA}}</Beta>
+    <Date>{{TEMPLATE_DATE}}</Date>
     <Name>{{OWNER}}-{{CONTAINER}}-{{CONTAINER_POSTFIX}}</Name>
     <Repository>{{OWNER}}/{{CONTAINER}}-{{CONTAINER_POSTFIX}}</Repository>
     <Registry>https://hub.docker.com/r/{{OWNER}}/{{CONTAINER}}-{{CONTAINER_POSTFIX}}/</Registry>
@@ -12,12 +13,13 @@
     <Privileged>true</Privileged>
     <Support>{{SUPPORT}}</Support>
     <Overview>
-        {{DESCRIPTION}}
+        {{OVERVIEW}}{{#OPENDCT}}[br][br] * including: {{ODCT_OVERVIEW}}{{/OPENDCT}}{{OVERVIEW_EXTRA}}
     </Overview>
     <Category>{{CATEGORY}}</Category>
     <WebUI>http://[IP]:[PORT:8080]/</WebUI>
     <TemplateURL/>
     <Icon>https://raw.githubusercontent.com/OpenSageTV/sagetv-dockers/master/resources/SageTVOS_icon.png</Icon>
+    <Banner>https://raw.githubusercontent.com/OpenSageTV/sagetv-dockers/master/resources/SageTVOS_icon.png</Banner>
     <ExtraParams/>
     <Description>
         {{DESCRIPTION}}
@@ -89,10 +91,32 @@
             <Mode>rw</Mode>
         </Volume>
         <Volume>
+            <HostDir>/mnt/user/media/tv/</HostDir>
+            <ContainerDir>/var/tv</ContainerDir>
+            <Mode>rw</Mode>
+        </Volume>
+        <Volume>
             <HostDir>/mnt/user</HostDir>
             <ContainerDir>/unraid</ContainerDir>
             <Mode>rw</Mode>
         </Volume>
+		{{#OPENDCT}}
+        <Volume>
+            <HostDir>/mnt/user/appdata/opendct/etc</HostDir>
+            <ContainerDir>/etc/opendct</ContainerDir>
+            <Mode>rw</Mode>
+        </Volume>
+        <Volume>
+            <HostDir>/mnt/user/appdata/opendct/log</HostDir>
+            <ContainerDir>/var/log/opendct</ContainerDir>
+            <Mode>rw</Mode>
+        </Volume>
+        <Volume>
+            <HostDir>/mnt/user/appdata/opendct/opt</HostDir>
+            <ContainerDir>/opt/opendct</ContainerDir>
+            <Mode>rw</Mode>
+        </Volume>
+		{{/OPENDCT}}
     </Data>
     <Environment>
         <Variable>
@@ -100,6 +124,13 @@
             <Name>VERSION</Name>
             <Mode/>
         </Variable>
+		{{#OPENDCT}}
+        <Variable>
+            <Value>latest</Value>
+            <Name>OPENDCT_VERSION</Name>
+            <Mode/>
+        </Variable>
+		{{/OPENDCT}}
         <Variable>
             <Value>1024</Value>
             <Name>JAVA_MEM_MB</Name>
@@ -166,6 +197,14 @@
 
     <Config Name="unRAID Share Path" Target="/unraid" Default="/mnt/user" Mode="rw"
             Description="Container Path: /unraid" Type="Path" Display="hidden" Required="false" Mask="false">/mnt/user</Config>
+
+    {{#OPENDCT}}
+    <Config Name="OpenDCT Configuration" Target="/etc/opendct" Default="/mnt/user/appdata/opendct/etc" Mode="rw" Description="Configuration" Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/opendct/etc</Config>
+
+    <Config Name="OpenDCT Log" Target="/var/log/opendct" Default="/mnt/user/appdata/opendct/log" Mode="rw" Description="Log" Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/opendct/log</Config>
+
+    <Config Name="OpenDCT Home" Target="/opt/opendct" Default="/mnt/user/appdata/opendct/opt" Mode="rw" Description="OpenDCT Home" Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/opendct/opt</Config>
+    {{/OPENDCT}}
 
     <Config Name="Variable 1" Target="VERSION" Default="latest" Mode="" Description="SageTV Version" Type="Variable"
             Display="always" Required="true" Mask="false">latest</Config>

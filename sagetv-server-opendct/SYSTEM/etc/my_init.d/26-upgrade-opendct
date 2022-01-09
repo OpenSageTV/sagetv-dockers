@@ -157,9 +157,4 @@ chmod 775 /etc/opendct
 echo "Setting OpenDCT to use media server consumer."
 echo -e "\nconsumer.dynamic.default=opendct.consumer.MediaServerConsumerImpl\n" >> /etc/opendct/conf/opendct.properties
 
-
-#echo "Enabling OpenDCT daemon..."
-#cp -f -T /etc/service/opendct/run.template /etc/service/opendct/run
-#chmod 775 /etc/service/opendct/run
-
 exit 0

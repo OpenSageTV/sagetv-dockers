@@ -2,9 +2,9 @@
 <Container version="2">
     <Beta>False</Beta>
     <Date>2022-01-09</Date>
-    <Name>sagetvopen-sagetv-server-java8</Name>
-    <Repository>sagetvopen/sagetv-server-java8</Repository>
-    <Registry>https://hub.docker.com/r/sagetvopen/sagetv-server-java8/</Registry>
+    <Name>sagetvopen-sagetv-server-opendct-java11</Name>
+    <Repository>sagetvopen/sagetv-server-opendct-java11</Repository>
+    <Registry>https://hub.docker.com/r/sagetvopen/sagetv-server-opendct-java11/</Registry>
     <GitHub>https://github.com/OpenSageTV/sagetv-dockers/tree/master/unRAID/sagetvopen-sagetv/</GitHub>
 	<Project>https://github.com/google/sagetv</Project>
 	<DonateText>Support me on Patreon</DonateText>
@@ -13,7 +13,7 @@
     <Privileged>true</Privileged>
     <Support>http://forums.sagetv.com/forums/showthread.php?p=587908</Support>
     <Overview>
-        SageTV is an Open Source PVR and Media Player[br][br]
+        SageTV is an Open Source PVR and Media Player[br][br] * including: An open source digital cable tuner network encoder for SageTV[br][br]
 Configuration[br]
         /opt/sagetv - This is the base directory for the server and other sagetv related files.  Under this location there can be a 'server' directory and if the existing 'server' directory exists it will be upgraded.[br]
         /var/media - Path for sagetv recordings and videos.  Under this directory there should be (or will be created) a 'tv' directory where SageTV recordings will get recorded.[br]
@@ -113,11 +113,31 @@ Configuration[br]
             <ContainerDir>/unraid</ContainerDir>
             <Mode>rw</Mode>
         </Volume>
+        <Volume>
+            <HostDir>/mnt/user/appdata/opendct/etc</HostDir>
+            <ContainerDir>/etc/opendct</ContainerDir>
+            <Mode>rw</Mode>
+        </Volume>
+        <Volume>
+            <HostDir>/mnt/user/appdata/opendct/log</HostDir>
+            <ContainerDir>/var/log/opendct</ContainerDir>
+            <Mode>rw</Mode>
+        </Volume>
+        <Volume>
+            <HostDir>/mnt/user/appdata/opendct/opt</HostDir>
+            <ContainerDir>/opt/opendct</ContainerDir>
+            <Mode>rw</Mode>
+        </Volume>
     </Data>
     <Environment>
         <Variable>
             <Value>latest</Value>
             <Name>VERSION</Name>
+            <Mode/>
+        </Variable>
+        <Variable>
+            <Value>latest</Value>
+            <Name>OPENDCT_VERSION</Name>
             <Mode/>
         </Variable>
         <Variable>
@@ -187,6 +207,11 @@ Configuration[br]
     <Config Name="unRAID Share Path" Target="/unraid" Default="/mnt/user" Mode="rw"
             Description="Container Path: /unraid" Type="Path" Display="hidden" Required="false" Mask="false">/mnt/user</Config>
 
+    <Config Name="OpenDCT Configuration" Target="/etc/opendct" Default="/mnt/user/appdata/opendct/etc" Mode="rw" Description="Configuration" Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/opendct/etc</Config>
+
+    <Config Name="OpenDCT Log" Target="/var/log/opendct" Default="/mnt/user/appdata/opendct/log" Mode="rw" Description="Log" Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/opendct/log</Config>
+
+    <Config Name="OpenDCT Home" Target="/opt/opendct" Default="/mnt/user/appdata/opendct/opt" Mode="rw" Description="OpenDCT Home" Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/opendct/opt</Config>
 
     <Config Name="Variable 1" Target="VERSION" Default="latest" Mode="" Description="SageTV Version" Type="Variable"
             Display="always" Required="true" Mask="false">latest</Config>
