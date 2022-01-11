@@ -6,12 +6,14 @@
 # FROM phusion/baseimage:18.04-1.0.0
 FROM phusion/baseimage:master
 
+ARG containerversion="NotSet"
+
 CMD ["/sbin/my_init"]
 
 MAINTAINER Ken Birch <usjusjoken@gmail.com>
 
 # The docker container version, not SageTV version
-ENV SAGETV_CONTAINER_VERSION="2.0.1" \
+ENV SAGETV_CONTAINER_VERSION=$containerversion \
     APP_NAME="SageTV Media Server" \
     DEBIAN_FRONTEND=noninteractive \
     LANG=en_US.UTF-8 \

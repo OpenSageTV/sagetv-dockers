@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <Container version="2">
     <Beta>False</Beta>
-    <Date>2022-01-09</Date>
+    <Date>2022-01-11</Date>
     <Name>sagetvopen-sagetv-opendct</Name>
     <Repository>sagetvopen/sagetv-opendct</Repository>
     <Registry>https://hub.docker.com/r/sagetvopen/sagetv-opendct/</Registry>
@@ -12,18 +12,29 @@
     <Network>host</Network>
     <Privileged>true</Privileged>
     <Support>https://forums.sagetv.com/forums/showthread.php?t=62774</Support>
-    <Overview>
-        An open source digital cable tuner network encoder for SageTV
-    </Overview>
+    <Overview>An open source digital cable tuner network encoder for SageTV&#xD;###Container version: 2.0.2&#xD;</Overview>
     <Category>MediaServer:Video</Category>
     <WebUI>http://[IP]:[PORT:8080]/</WebUI>
     <TemplateURL/>
     <Icon>https://raw.githubusercontent.com/OpenSageTV/sagetv-dockers/master/resources/SageTVOS_icon.png</Icon>
     <Banner>https://raw.githubusercontent.com/OpenSageTV/sagetv-dockers/master/resources/SageTVOS_icon.png</Banner>
     <ExtraParams/>
-    <Description>
-        An open source digital cable tuner network encoder for SageTV
-    </Description>
+    <Description>An open source digital cable tuner network encoder for SageTV</Description>
+	<Changes>### 2.0.2
+- ServerODCTJ11 - fix to path for JVM
+- ServerODCTJ16 - fix to path for JVM
+- template changes for changelog, versioning and support link
+### 2.0.1
+- initial release: setup Docker Hub and Github repositories
+- Server: change base os to ubuntu 20.04
+- Server: fix gentuner and commandir old bintray links
+- ServerJ8: fix to cacert issue blocking placeshifter connection
+- ServerODCT: add 8,11,16 containers embedding OpenDCT
+- Server: fix to get latest SageTV release from Github
+- ServerODCT: fix to get latest SageTV/OpenDCT releases from Github
+- ODCT: update to get latest ODCT release from Github
+- Templates: update to support all new containers
+- BuildScripts: updated to include all containers</Changes>
     <Networking>
         <Mode>host</Mode>
     </Networking>

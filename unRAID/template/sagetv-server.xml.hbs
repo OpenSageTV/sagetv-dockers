@@ -12,18 +12,15 @@
     <Network>host</Network>
     <Privileged>true</Privileged>
     <Support>{{SUPPORT}}</Support>
-    <Overview>
-        {{OVERVIEW}}{{#OPENDCT}}[br][br] * including: {{ODCT_OVERVIEW}}{{/OPENDCT}}{{OVERVIEW_EXTRA}}
-    </Overview>
+    <Overview>{{OVERVIEW}}{{#OPENDCT}}&#xD;&#xD;- including OpenDCT: {{ODCT_OVERVIEW}}{{/OPENDCT}}&#xD;{{OVERVIEW_EXTRA}}&#xD;###Container version: {{SAGETV_CONTAINER_VERSION}}&#xD;</Overview>
     <Category>{{CATEGORY}}</Category>
     <WebUI>http://[IP]:[PORT:8080]/</WebUI>
     <TemplateURL/>
     <Icon>https://raw.githubusercontent.com/OpenSageTV/sagetv-dockers/master/resources/SageTVOS_icon.png</Icon>
     <Banner>https://raw.githubusercontent.com/OpenSageTV/sagetv-dockers/master/resources/SageTVOS_icon.png</Banner>
     <ExtraParams/>
-    <Description>
-        {{DESCRIPTION}}
-    </Description>
+    <Description>{{DESCRIPTION}}</Description>
+	<Changes>{{CHANGES}}</Changes>
     <Networking>
         <Mode>host</Mode>
         <Publish>

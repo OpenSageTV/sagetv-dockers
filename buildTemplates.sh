@@ -4,6 +4,12 @@ TEMPLATE_SRC=unRAID/template/
 TEMPLATE_OUT=unRAID/sagetvopen-sagetv/
 . ${TEMPLATE_SRC}/./VARS.sh
 
+# get container version from the version file - update the file prior to running
+cversion=$(<containerversion) && \
+export cversion && \
+echo "Container version $cversion read from containerversion file"
+export SAGETV_CONTAINER_VERSION=$cversion
+
 export CONTAINER="sagetv-server"
 export CONTAINER_POSTFIX="java8"
 export BETA="False"
