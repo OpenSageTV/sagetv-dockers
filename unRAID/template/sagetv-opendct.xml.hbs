@@ -14,7 +14,7 @@
     <Support>{{ODCT_SUPPORT}}</Support>
     <Overview>{{ODCT_OVERVIEW}}&#xD;###Container version: {{SAGETV_CONTAINER_VERSION}}&#xD;</Overview>
     <Category>{{ODCT_CATEGORY}}</Category>
-    <WebUI>http://[IP]:[PORT:8080]/</WebUI>
+    <WebUI>http://[IP]:[PORT:9091]/</WebUI>
     <TemplateURL/>
     <Icon>https://raw.githubusercontent.com/OpenSageTV/sagetv-dockers/master/resources/SageTVOS_icon.png</Icon>
     <Banner>https://raw.githubusercontent.com/OpenSageTV/sagetv-dockers/master/resources/SageTVOS_icon.png</Banner>
@@ -23,6 +23,13 @@
 	<Changes>{{ODCT_CHANGES}}</Changes>
     <Networking>
         <Mode>host</Mode>
+        <Publish>
+            <Port>
+                <HostPort>9091</HostPort>
+                <ContainerPort>9091</ContainerPort>
+                <Protocol>tcp</Protocol>
+            </Port>
+        </Publish>
     </Networking>
     <Data>
         <Volume>
@@ -48,6 +55,8 @@
             <Mode/>
         </Variable>
     </Environment>
+    <Config Name="OpenDCT WebUI" Target="9091" Default="9091" Mode="tcp" Description="OpenDCT WebUI Port" Type="Port"
+            Display="always" Required="true" Mask="false">9091</Config>
     <Config Name="OpenDCT Version" Target="VERSION" Default="latest" Mode="" Description="OpenDCT Version" Type="Variable"
             Display="always" Required="true" Mask="false">latest</Config>
     <Config Name="OpenDCT Configuration" Target="/etc/opendct" Default="/mnt/user/appdata/opendct/etc" Mode="rw" Description="Configuration" Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/opendct/etc</Config>

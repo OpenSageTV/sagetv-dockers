@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <Container version="2">
     <Beta>False</Beta>
-    <Date>2022-01-11</Date>
+    <Date>2022-01-17</Date>
     <Name>sagetvopen-sagetv-server-java16</Name>
     <Repository>sagetvopen/sagetv-server-java16</Repository>
     <Registry>https://hub.docker.com/r/sagetvopen/sagetv-server-java16/</Registry>
@@ -25,7 +25,7 @@ Configuration &#xD;&#xA;
 &#xD;&#xA;Notes&#xD;&#xA;
  - SageTV will need to use 'host' or 'br0' (set a unique IP) networking, so while the ports are defined, they are not required to be edited.  Without 'host' or 'br0', sagetv will think your network clients are connecting as remote placeshifters, and present the placeshifter login.  If using br0 mode (preferred) as the IP is unique the WebUI port of 8080 will not have any issues.  If running in host mode, make sure you don't have other docker containers that are using port 8080.  If you do, then EITHER change SageTV Jetty Port (in plugin configuration) after install, or, update the other docker containers to NOT use port 8080.&#xD;
  - On every Docker start, it will check for a new version of SageTV and install it, if it exists. You can force it to stay on a sepcific version by setting the Version in the template. The Version must match exactly the version tag from the github releases.&#xD;
- - There are Java 8, 11, and 16 version of these containers.  Java 8 will be the default moving forward, but it currently has issues with the the /apps/ path in the Jetty Web UI.&#xD;&#xD;###Container version: 2.0.2&#xD;</Overview>
+ - There are Java 8, 11, and 16 version of these containers.  Java 8 will be the default moving forward, but it currently has issues with the the /apps/ path in the Jetty Web UI.&#xD;&#xD;###Container version: 2.0.3&#xD;</Overview>
     <Category>MediaApp:Video MediaApp:Music MediaApp:Photos MediaServer:Video MediaServer:Music MediaServer:Photos</Category>
     <WebUI>http://[IP]:[PORT:8080]/</WebUI>
     <TemplateURL/>
@@ -33,7 +33,9 @@ Configuration &#xD;&#xA;
     <Banner>https://raw.githubusercontent.com/OpenSageTV/sagetv-dockers/master/resources/SageTVOS_icon.png</Banner>
     <ExtraParams/>
     <Description>SageTV is an Open Source PVR and Media Player</Description>
-	<Changes>### 2.0.2
+	<Changes>### 2.0.3
+- ODCT - exposed ports 9091 and 8271
+### 2.0.2
 - ServerODCTJ11 - fix to path for JVM
 - ServerODCTJ16 - fix to path for JVM
 - template changes for changelog, versioning and support link
@@ -167,8 +169,10 @@ Configuration &#xD;&#xA;
             <Mode/>
         </Variable>
     </Environment>
-    <Config Name="Port 1" Target="8080" Default="8080" Mode="tcp" Description="SageTV WebServer Port 8080" Type="Port"
-            Display="advanced-hide" Required="true" Mask="false">8080</Config>
+    <Config Name="SageTV WebUI" Target="8080" Default="8080" Mode="tcp" Description="SageTV WebServer Port" Type="Port"
+            Display="always" Required="true" Mask="false">8080</Config>
+
+
     <Config Name="Port 2" Target="42024" Default="42024" Mode="tcp" Description="Container Port: 42024" Type="Port"
             Display="advanced-hide" Required="true" Mask="false">42024</Config>
     <Config Name="Port 3" Target="7818" Default="7818" Mode="tcp" Description="Container Port: 7818" Type="Port"
@@ -186,33 +190,33 @@ Configuration &#xD;&#xA;
     <Config Name="Port 9" Target="16881" Default="16881" Mode="tcp" Description="Container Port: 16881" Type="Port"
             Display="advanced-hide" Required="true" Mask="false">16881</Config>
 
-    <Config Name="Path 1" Target="/opt/sagetv" Default="/mnt/user/appdata/sagetv/" Mode="rw"
+    <Config Name="SageTV Appdata Path" Target="/opt/sagetv" Default="/mnt/user/appdata/sagetv/" Mode="rw"
             Description="SageTV base directory" Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/sagetv/</Config>
 
-    <Config Name="Path 2" Target="/var/media" Default="/mnt/user/media/sagetv/" Mode="rw"
+    <Config Name="Media Path" Target="/var/media" Default="/mnt/user/media/sagetv/" Mode="rw"
             Description="SageTV Media Directory (for recordings, etc)" Type="Path" Display="always" Required="true" Mask="false">/mnt/user/sagemedia/</Config>
 
-    <Config Name="Path 3" Target="/var/mediaext" Default="/mnt/user/media/videos/" Mode="rw"
+    <Config Name="Extra Media Path" Target="/var/mediaext" Default="/mnt/user/media/videos/" Mode="rw"
             Description="SageTV videos directory for other imported video files" Type="Path" Display="always" Required="true" Mask="false">/mnt/user/media/videos/</Config>
 
     <Config Name="unRAID Share Path" Target="/unraid" Default="/mnt/user" Mode="rw"
-            Description="Container Path: /unraid" Type="Path" Display="hidden" Required="false" Mask="false">/mnt/user</Config>
+            Description="Container Path: /unraid" Type="Path" Display="advanced-hide" Required="false" Mask="false">/mnt/user</Config>
 
 
-    <Config Name="Variable 1" Target="VERSION" Default="latest" Mode="" Description="SageTV Version" Type="Variable"
+    <Config Name="SageTV version" Target="VERSION" Default="latest" Mode="" Description="SageTV Version" Type="Variable"
             Display="always" Required="true" Mask="false">latest</Config>
-    <Config Name="Variable 2" Target="JAVA_MEM_MB" Default="1024" Mode="" Description="Java Memory in MB"
+    <Config Name="JVM Memory" Target="JAVA_MEM_MB" Default="1024" Mode="" Description="Java Memory in MB"
             Type="Variable" Display="always" Required="false" Mask="false">1024</Config>
-    <Config Name="Variable 3" Target="LICENCE_DATA" Default="" Mode="" Description="SageTV License Key"
-            Type="Variable" Display="always" Required="false" Mask="false"></Config>
-    <Config Name="Variable 4" Target="OPT_GENTUNER" Default="Y" Mode="" Description="Install Gentuner Plugin"
+    <Config Name="License Key" Target="LICENCE_DATA" Default="" Mode="" Description="SageTV License Key"
+            Type="Variable" Display="advanced-hide" Required="false" Mask="false"></Config>
+    <Config Name="Install Gentuner" Target="OPT_GENTUNER" Default="Y" Mode="" Description="Install Gentuner Plugin"
             Type="Variable" Display="advanced-hide" Required="false" Mask="false">Y</Config>
-    <Config Name="Variable 5" Target="OPT_COMMANDIR" Default="N" Mode="" Description="Install CommandIR files"
+    <Config Name="Install CommandIR" Target="OPT_COMMANDIR" Default="N" Mode="" Description="Install CommandIR files"
             Type="Variable" Display="advanced-hide" Required="false" Mask="false">N</Config>
-    <Config Name="Variable 6" Target="OPT_COMSKIP" Default="Y" Mode="" Description="Install native comskip files"
+    <Config Name="Install Native Comskip" Target="OPT_COMSKIP" Default="Y" Mode="" Description="Install native comskip files"
             Type="Variable" Display="advanced-hide" Required="false" Mask="false">Y</Config>
-    <Config Name="Variable 7" Target="OPT_SETPERMS" Default="Y" Mode="" Description="Set permissions on startup"
+    <Config Name="Set permissions" Target="OPT_SETPERMS" Default="Y" Mode="" Description="Set permissions on startup"
             Type="Variable" Display="advanced-hide" Required="false" Mask="false">Y</Config>
-    <Config Name="Variable 8" Target="OPT_LIRC" Default="N" Mode="" Description="Enable LIRC Daemon with Configuration from SageTV lirc.d Directory"
+    <Config Name="Enable LIRC" Target="OPT_LIRC" Default="N" Mode="" Description="Enable LIRC Daemon with Configuration from SageTV lirc.d Directory"
             Type="Variable" Display="advanced-hide" Required="false" Mask="false">N</Config>
 </Container>

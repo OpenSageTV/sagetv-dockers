@@ -29,6 +29,13 @@
                 <ContainerPort>8080</ContainerPort>
                 <Protocol>tcp</Protocol>
             </Port>
+			{{#OPENDCT}}
+            <Port>
+                <HostPort>9091</HostPort>
+                <ContainerPort>9091</ContainerPort>
+                <Protocol>tcp</Protocol>
+            </Port>
+			{{/OPENDCT}}
             <Port>
                 <HostPort>7818</HostPort>
                 <ContainerPort>7818</ContainerPort>
@@ -164,8 +171,14 @@
             <Mode/>
         </Variable>
     </Environment>
-    <Config Name="Port 1" Target="8080" Default="8080" Mode="tcp" Description="SageTV WebServer Port 8080" Type="Port"
-            Display="advanced-hide" Required="true" Mask="false">8080</Config>
+    <Config Name="SageTV WebUI" Target="8080" Default="8080" Mode="tcp" Description="SageTV WebServer Port" Type="Port"
+            Display="always" Required="true" Mask="false">8080</Config>
+
+    {{#OPENDCT}}
+    <Config Name="OpenDCT WebUI" Target="9091" Default="9091" Mode="tcp" Description="OpenDCT WebUI Port" Type="Port"
+            Display="always" Required="true" Mask="false">9091</Config>
+    {{/OPENDCT}}
+
     <Config Name="Port 2" Target="42024" Default="42024" Mode="tcp" Description="Container Port: 42024" Type="Port"
             Display="advanced-hide" Required="true" Mask="false">42024</Config>
     <Config Name="Port 3" Target="7818" Default="7818" Mode="tcp" Description="Container Port: 7818" Type="Port"
@@ -183,17 +196,17 @@
     <Config Name="Port 9" Target="16881" Default="16881" Mode="tcp" Description="Container Port: 16881" Type="Port"
             Display="advanced-hide" Required="true" Mask="false">16881</Config>
 
-    <Config Name="Path 1" Target="/opt/sagetv" Default="/mnt/user/appdata/sagetv/" Mode="rw"
+    <Config Name="SageTV Appdata Path" Target="/opt/sagetv" Default="/mnt/user/appdata/sagetv/" Mode="rw"
             Description="SageTV base directory" Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/sagetv/</Config>
 
-    <Config Name="Path 2" Target="/var/media" Default="/mnt/user/media/sagetv/" Mode="rw"
+    <Config Name="Media Path" Target="/var/media" Default="/mnt/user/media/sagetv/" Mode="rw"
             Description="SageTV Media Directory (for recordings, etc)" Type="Path" Display="always" Required="true" Mask="false">/mnt/user/sagemedia/</Config>
 
-    <Config Name="Path 3" Target="/var/mediaext" Default="/mnt/user/media/videos/" Mode="rw"
+    <Config Name="Extra Media Path" Target="/var/mediaext" Default="/mnt/user/media/videos/" Mode="rw"
             Description="SageTV videos directory for other imported video files" Type="Path" Display="always" Required="true" Mask="false">/mnt/user/media/videos/</Config>
 
     <Config Name="unRAID Share Path" Target="/unraid" Default="/mnt/user" Mode="rw"
-            Description="Container Path: /unraid" Type="Path" Display="hidden" Required="false" Mask="false">/mnt/user</Config>
+            Description="Container Path: /unraid" Type="Path" Display="advanced-hide" Required="false" Mask="false">/mnt/user</Config>
 
     {{#OPENDCT}}
     <Config Name="OpenDCT Configuration" Target="/etc/opendct" Default="/mnt/user/appdata/opendct/etc" Mode="rw" Description="Configuration" Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/opendct/etc</Config>
@@ -203,20 +216,24 @@
     <Config Name="OpenDCT Home" Target="/opt/opendct" Default="/mnt/user/appdata/opendct/opt" Mode="rw" Description="OpenDCT Home" Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/opendct/opt</Config>
     {{/OPENDCT}}
 
-    <Config Name="Variable 1" Target="VERSION" Default="latest" Mode="" Description="SageTV Version" Type="Variable"
+    <Config Name="SageTV version" Target="VERSION" Default="latest" Mode="" Description="SageTV Version" Type="Variable"
             Display="always" Required="true" Mask="false">latest</Config>
-    <Config Name="Variable 2" Target="JAVA_MEM_MB" Default="1024" Mode="" Description="Java Memory in MB"
+    {{#OPENDCT}}
+    <Config Name="OpenDCT Version" Target="VERSION" Default="latest" Mode="" Description="OpenDCT Version" Type="Variable"
+            Display="always" Required="true" Mask="false">latest</Config>
+    {{/OPENDCT}}
+    <Config Name="JVM Memory" Target="JAVA_MEM_MB" Default="1024" Mode="" Description="Java Memory in MB"
             Type="Variable" Display="always" Required="false" Mask="false">1024</Config>
-    <Config Name="Variable 3" Target="LICENCE_DATA" Default="" Mode="" Description="SageTV License Key"
-            Type="Variable" Display="always" Required="false" Mask="false"></Config>
-    <Config Name="Variable 4" Target="OPT_GENTUNER" Default="Y" Mode="" Description="Install Gentuner Plugin"
+    <Config Name="License Key" Target="LICENCE_DATA" Default="" Mode="" Description="SageTV License Key"
+            Type="Variable" Display="advanced-hide" Required="false" Mask="false"></Config>
+    <Config Name="Install Gentuner" Target="OPT_GENTUNER" Default="Y" Mode="" Description="Install Gentuner Plugin"
             Type="Variable" Display="advanced-hide" Required="false" Mask="false">Y</Config>
-    <Config Name="Variable 5" Target="OPT_COMMANDIR" Default="N" Mode="" Description="Install CommandIR files"
+    <Config Name="Install CommandIR" Target="OPT_COMMANDIR" Default="N" Mode="" Description="Install CommandIR files"
             Type="Variable" Display="advanced-hide" Required="false" Mask="false">N</Config>
-    <Config Name="Variable 6" Target="OPT_COMSKIP" Default="Y" Mode="" Description="Install native comskip files"
+    <Config Name="Install Native Comskip" Target="OPT_COMSKIP" Default="Y" Mode="" Description="Install native comskip files"
             Type="Variable" Display="advanced-hide" Required="false" Mask="false">Y</Config>
-    <Config Name="Variable 7" Target="OPT_SETPERMS" Default="Y" Mode="" Description="Set permissions on startup"
+    <Config Name="Set permissions" Target="OPT_SETPERMS" Default="Y" Mode="" Description="Set permissions on startup"
             Type="Variable" Display="advanced-hide" Required="false" Mask="false">Y</Config>
-    <Config Name="Variable 8" Target="OPT_LIRC" Default="N" Mode="" Description="Enable LIRC Daemon with Configuration from SageTV lirc.d Directory"
+    <Config Name="Enable LIRC" Target="OPT_LIRC" Default="N" Mode="" Description="Enable LIRC Daemon with Configuration from SageTV lirc.d Directory"
             Type="Variable" Display="advanced-hide" Required="false" Mask="false">N</Config>
 </Container>

@@ -1,3 +1,5 @@
+### 2.0.3
+- ODCT - exposed ports 9091 and 8271
 ### 2.0.2
 - ServerODCTJ11 - fix to path for JVM
 - ServerODCTJ16 - fix to path for JVM

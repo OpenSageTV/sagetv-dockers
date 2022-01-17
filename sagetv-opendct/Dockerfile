@@ -29,5 +29,8 @@ VOLUME ["/opt/opendct"]
 ADD install-opendct.sh /usr/bin/
 RUN chmod 755 /usr/bin/install-opendct.sh
 
+# 9091 for webui and 8271 to discover sagetv servers
+EXPOSE 9091 8271
+
 # launch script which will install and start opendct
 CMD ["/usr/bin/install-opendct.sh"]
