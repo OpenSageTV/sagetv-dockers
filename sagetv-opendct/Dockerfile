@@ -1,7 +1,8 @@
 # BUILDING
 # docker build -t sagetvopen/sagetv-opendct:latest sagetv-opendct
 
-FROM ubuntu:16.04
+#FROM ubuntu:16.04
+FROM phusion/baseimage:master
 
 MAINTAINER Ken Birch <usjusjoken@gmail.com>
 

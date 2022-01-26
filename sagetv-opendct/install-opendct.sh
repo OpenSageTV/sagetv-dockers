@@ -73,8 +73,9 @@ else
     chmod 775 /var/run/
     chmod 775 /run/
 
-    # Set to use media server consumer, so we don't have to have access to recording location.
-    echo -e "\nconsumer.dynamic.default=opendct.consumer.MediaServerConsumerImpl\n" >> /etc/opendct/conf/opendct.properties
+    # Removed with version 2.04 1/26/2022 as this is now the default anyway
+	# Set to use media server consumer, so we don't have to have access to recording location.
+	# echo -e "\nconsumer.dynamic.default=opendct.consumer.MediaServerConsumerImpl\n" >> /etc/opendct/conf/opendct.properties
 
     # Record the installed version to prevent reinstallation every time the container starts
     echo "${OPENDCT_URL}" > ${OPENDCT_CUR_INSTALL_FILE}

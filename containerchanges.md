@@ -1,3 +1,6 @@
+### 2.0.4
+- ODCT - now uses ubuntu 20.04
+- ODCT - removed changing properties to force media server as that is the default anyway
 ### 2.0.3
 - ODCT - exposed ports 9091 and 8271
 ### 2.0.2

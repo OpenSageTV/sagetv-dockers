@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <Container version="2">
     <Beta>False</Beta>
-    <Date>2022-01-17</Date>
+    <Date>2022-01-26</Date>
     <Name>sagetvopen-sagetv-opendct</Name>
     <Repository>sagetvopen/sagetv-opendct</Repository>
     <Registry>https://hub.docker.com/r/sagetvopen/sagetv-opendct/</Registry>
@@ -12,7 +12,7 @@
     <Network>host</Network>
     <Privileged>true</Privileged>
     <Support>https://forums.sagetv.com/forums/showthread.php?t=62774</Support>
-    <Overview>An open source digital cable tuner network encoder for SageTV&#xD;###Container version: 2.0.3&#xD;</Overview>
+    <Overview>An open source digital cable tuner network encoder for SageTV&#xD;###Container version: 2.0.4&#xD;</Overview>
     <Category>MediaServer:Video</Category>
     <WebUI>http://[IP]:[PORT:9091]/</WebUI>
     <TemplateURL/>
@@ -20,7 +20,10 @@
     <Banner>https://raw.githubusercontent.com/OpenSageTV/sagetv-dockers/master/resources/SageTVOS_icon.png</Banner>
     <ExtraParams/>
     <Description>An open source digital cable tuner network encoder for SageTV</Description>
-	<Changes>### 2.0.3
+	<Changes>### 2.0.4
+- ODCT - now uses ubuntu 20.04
+- ODCT - removed changing properties to force media server as that is the default anyway
+### 2.0.3
 - ODCT - exposed ports 9091 and 8271
 ### 2.0.2
 - ServerODCTJ11 - fix to path for JVM
