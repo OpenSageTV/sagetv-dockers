@@ -25,15 +25,15 @@ services:
             - OPT_SETPERMS=Y
             - OPT_LIRC=N
         volumes:
-            - '/mnt/user/appdata/sagetv60/:/opt/sagetv:rw'
-            - '/mnt/user/sagemedia/:/var/media:rw'
-            - '/mnt/user/media/videos/:/var/mediaext:rw'
-            - '/mnt/user/appdata/sagetv60/opendct/etc:/etc/opendct:rw'
-            - '/mnt/user/appdata/sagetv60/opendct/log:/var/log/opendct:rw'
-            - '/mnt/user/appdata/sagetv60/opendct/opt:/opt/opendct:rw'
-            - '/mnt/user:/unraid:rw'
+            - '/mnt/sagetvdocker/appdata/sagetv_1/:/opt/sagetv:rw'
+            - '/mnt/sagetvdocker/sagemedia/:/var/media:rw'
+            - '/mnt/sagetvdocker/media/videos/:/var/mediaext:rw'
+            - '/mnt/sagetvdocker/appdata/sagetv_1/opendct/etc:/etc/opendct:rw'
+            - '/mnt/sagetvdocker/appdata/sagetv_1/opendct/log:/var/log/opendct:rw'
+            - '/mnt/sagetvdocker/appdata/sagetv_1/opendct/opt:/opt/opendct:rw'
+            - '/mnt/sagetvdocker:/unraid:rw'
         image: sagetvopen/sagetv-server-opendct-java8
-        hostname: sagetv-opendct-60
+        hostname: sagetv-opendct-1
         networks:
           br0:
             ipv4_address: 192.168.0.60        
@@ -63,13 +63,13 @@ services:
             - OPT_SETPERMS=Y
             - OPT_LIRC=N
         volumes:
-            - '/mnt/user/appdata/sagetv61/:/opt/sagetv:rw'
-            - '/mnt/user/sagemedia/:/var/media:rw'
-            - '/mnt/user/media/videos/:/var/mediaext:rw'
-            - '/mnt/user/appdata/sagetv61/opendct/etc:/etc/opendct:rw'
-            - '/mnt/user/appdata/sagetv61/opendct/log:/var/log/opendct:rw'
-            - '/mnt/user/appdata/sagetv61/opendct/opt:/opt/opendct:rw'
-            - '/mnt/user:/unraid:rw'
+            - '/mnt/sagetvdocker/appdata/sagetv_2/:/opt/sagetv:rw'
+            - '/mnt/sagetvdocker/sagemedia/:/var/media:rw'
+            - '/mnt/sagetvdocker/media/videos/:/var/mediaext:rw'
+            - '/mnt/sagetvdocker/appdata/sagetv_2/opendct/etc:/etc/opendct:rw'
+            - '/mnt/sagetvdocker/appdata/sagetv_2/opendct/log:/var/log/opendct:rw'
+            - '/mnt/sagetvdocker/appdata/sagetv_2/opendct/opt:/opt/opendct:rw'
+            - '/mnt/sagetvdocker:/unraid:rw'
         image: sagetvopen/sagetv-server-opendct-java8
         hostname: sagetv-opendct-64
         networks:
