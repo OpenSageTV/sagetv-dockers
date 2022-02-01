@@ -1,0 +1,88 @@
+version: '3.3'
+services:
+    sagetv-server-opendct-java8-1:
+        container_name: sagetvopen-sagetv-server-opendct-java8_1
+        privileged: true
+        environment:
+            - TZ=America/Denver
+            - TCP_PORT_8080=8080
+            - TCP_PORT_9091=9091
+            - VERSION=latest
+            - OPENDCT_VERSION=latest
+            - JAVA_MEM_MB=1024
+            - TCP_PORT_42024=42024
+            - TCP_PORT_7818=7818
+            - UDP_PORT_8270=8270
+            - UDP_PORT_31100=31100
+            - TCP_PORT_31099=31099
+            - UDP_PORT_16867=16867
+            - UDP_PORT_16869=16869
+            - TCP_PORT_16881=16881
+            - LICENCE_DATA=
+            - OPT_GENTUNER=Y
+            - OPT_COMMANDIR=N
+            - OPT_COMSKIP=Y
+            - OPT_SETPERMS=Y
+            - OPT_LIRC=N
+        volumes:
+            - '/mnt/user/appdata/sagetv60/:/opt/sagetv:rw'
+            - '/mnt/user/sagemedia/:/var/media:rw'
+            - '/mnt/user/media/videos/:/var/mediaext:rw'
+            - '/mnt/user/appdata/sagetv60/opendct/etc:/etc/opendct:rw'
+            - '/mnt/user/appdata/sagetv60/opendct/log:/var/log/opendct:rw'
+            - '/mnt/user/appdata/sagetv60/opendct/opt:/opt/opendct:rw'
+            - '/mnt/user:/unraid:rw'
+        image: sagetvopen/sagetv-server-opendct-java8
+        hostname: sagetv-opendct-60
+        networks:
+          br0:
+            ipv4_address: 192.168.0.60        
+        
+    sagetv-server-opendct-java8-2:
+        container_name: sagetvopen-sagetv-server-opendct-java8_2
+        privileged: true
+        environment:
+            - TZ=America/Denver
+            - TCP_PORT_8080=8080
+            - TCP_PORT_9091=9091
+            - VERSION=latest
+            - OPENDCT_VERSION=latest
+            - JAVA_MEM_MB=1024
+            - TCP_PORT_42024=42024
+            - TCP_PORT_7818=7818
+            - UDP_PORT_8270=8270
+            - UDP_PORT_31100=31100
+            - TCP_PORT_31099=31099
+            - UDP_PORT_16867=16867
+            - UDP_PORT_16869=16869
+            - TCP_PORT_16881=16881
+            - LICENCE_DATA=
+            - OPT_GENTUNER=Y
+            - OPT_COMMANDIR=N
+            - OPT_COMSKIP=Y
+            - OPT_SETPERMS=Y
+            - OPT_LIRC=N
+        volumes:
+            - '/mnt/user/appdata/sagetv61/:/opt/sagetv:rw'
+            - '/mnt/user/sagemedia/:/var/media:rw'
+            - '/mnt/user/media/videos/:/var/mediaext:rw'
+            - '/mnt/user/appdata/sagetv61/opendct/etc:/etc/opendct:rw'
+            - '/mnt/user/appdata/sagetv61/opendct/log:/var/log/opendct:rw'
+            - '/mnt/user/appdata/sagetv61/opendct/opt:/opt/opendct:rw'
+            - '/mnt/user:/unraid:rw'
+        image: sagetvopen/sagetv-server-opendct-java8
+        hostname: sagetv-opendct-64
+        networks:
+          br0:
+            ipv4_address: 192.168.0.64
+        
+networks:
+  br0:
+    driver: macvlan
+    driver_opts:
+      parent: eth0
+    ipam:
+      config:
+        - subnet: "192.168.0.0/24"
+          ip_range: "192.168.0.64/26"
+          gateway: "192.168.0.1"        
