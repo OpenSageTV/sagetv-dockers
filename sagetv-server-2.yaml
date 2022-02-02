@@ -27,6 +27,7 @@ services:
         volumes:
             - '/mnt/appdata/sagetv_1/:/opt/sagetv:rw'
             - '/mnt/media/:/var/media:rw'
+            - '/mnt/tv/:/var/tv:rw'
             - '/mnt/media/videos/:/var/mediaext:rw'
             - '/mnt/appdata/sagetv_1/opendct/etc:/etc/opendct:rw'
             - '/mnt/appdata/sagetv_1/opendct/log:/var/log/opendct:rw'
@@ -65,6 +66,7 @@ services:
         volumes:
             - '/mnt/appdata/sagetv_2/:/opt/sagetv:rw'
             - '/mnt/media/:/var/media:rw'
+            - '/mnt/tv/:/var/tv:rw'
             - '/mnt/media/videos/:/var/mediaext:rw'
             - '/mnt/appdata/sagetv_2/opendct/etc:/etc/opendct:rw'
             - '/mnt/appdata/sagetv_2/opendct/log:/var/log/opendct:rw'
