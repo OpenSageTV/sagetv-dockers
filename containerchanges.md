@@ -1,3 +1,6 @@
+### 2.0.5
+- ServerJ11 - moved JDK from 11.0.2 to 11.0.15 to resolve TLS 1.3 error
+- Note: other dockers were not changed
 ### 2.0.4
 - ODCT - now uses ubuntu 20.04
 - ODCT - removed changing properties to force media server as that is the default anyway
