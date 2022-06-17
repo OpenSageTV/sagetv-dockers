@@ -1,3 +1,5 @@
+### 2.0.6
+- ServerJ11 - fix for sage not starting on server 11
 ### 2.0.5
 - ServerJ11 - moved JDK from 11.0.2 to 11.0.15 to resolve TLS 1.3 error
 - Note: other dockers were not changed

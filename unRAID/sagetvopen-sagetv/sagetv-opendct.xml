@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <Container version="2">
     <Beta>False</Beta>
-    <Date>2022-06-15</Date>
+    <Date>2022-06-17</Date>
     <Name>sagetvopen-sagetv-opendct</Name>
     <Repository>sagetvopen/sagetv-opendct</Repository>
     <Registry>https://hub.docker.com/r/sagetvopen/sagetv-opendct/</Registry>
@@ -12,7 +12,7 @@
     <Network>host</Network>
     <Privileged>true</Privileged>
     <Support>https://forums.sagetv.com/forums/showthread.php?t=62774</Support>
-    <Overview>An open source digital cable tuner network encoder for SageTV&#xD;###Container version: 2.0.5&#xD;</Overview>
+    <Overview>An open source digital cable tuner network encoder for SageTV&#xD;###Container version: 2.0.6&#xD;</Overview>
     <Category>MediaServer:Video</Category>
     <WebUI>http://[IP]:[PORT:9091]/</WebUI>
     <TemplateURL/>
@@ -20,7 +20,9 @@
     <Banner>https://raw.githubusercontent.com/OpenSageTV/sagetv-dockers/master/resources/SageTVOS_icon.png</Banner>
     <ExtraParams/>
     <Description>An open source digital cable tuner network encoder for SageTV</Description>
-	<Changes>### 2.0.5
+	<Changes>### 2.0.6
+- ServerJ11 - fix for sage not starting on server 11
+### 2.0.5
 - ServerJ11 - moved JDK from 11.0.2 to 11.0.15 to resolve TLS 1.3 error
 - Note: other dockers were not changed
 ### 2.0.4

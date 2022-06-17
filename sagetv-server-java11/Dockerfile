@@ -24,6 +24,7 @@ COPY SYSTEM/ /
 
 RUN echo "PATH=${PATH}" > /etc/profile.d/sagetv.sh && \
     JAVA_HOME=/usr/lib/jvm/openlogic-openjdk-11.0.15+10-linux-x64 >> /etc/profile.d/sagetv.sh && \
+    chmod 755 /usr/local/bin/* && \
     chmod 755 /etc/profile.d/sagetv.sh
 
 # Setup the /usr/bin/java alias (used by OpenDCT among other things)

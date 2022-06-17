@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <Container version="2">
     <Beta>False</Beta>
-    <Date>2022-06-15</Date>
+    <Date>2022-06-17</Date>
     <Name>sagetvopen-sagetv-server-java8</Name>
     <Repository>sagetvopen/sagetv-server-java8</Repository>
     <Registry>https://hub.docker.com/r/sagetvopen/sagetv-server-java8/</Registry>
@@ -25,7 +25,7 @@ Configuration &#xD;&#xA;
 &#xD;&#xA;Notes&#xD;&#xA;
  - SageTV will need to use 'host' or 'br0' (set a unique IP) networking, so while the ports are defined, they are not required to be edited.  Without 'host' or 'br0', sagetv will think your network clients are connecting as remote placeshifters, and present the placeshifter login.  If using br0 mode (preferred) as the IP is unique the WebUI port of 8080 will not have any issues.  If running in host mode, make sure you don't have other docker containers that are using port 8080.  If you do, then EITHER change SageTV Jetty Port (in plugin configuration) after install, or, update the other docker containers to NOT use port 8080.&#xD;
  - On every Docker start, it will check for a new version of SageTV and install it, if it exists. You can force it to stay on a sepcific version by setting the Version in the template. The Version must match exactly the version tag from the github releases.&#xD;
- - There are Java 8, 11, and 16 version of these containers.  Java 8 will be the default moving forward, but it currently has issues with the the /apps/ path in the Jetty Web UI.&#xD;&#xD;###Container version: 2.0.5&#xD;</Overview>
+ - There are Java 8, 11, and 16 version of these containers.  Java 8 will be the default moving forward, but it currently has issues with the the /apps/ path in the Jetty Web UI.&#xD;&#xD;###Container version: 2.0.6&#xD;</Overview>
     <Category>MediaApp:Video MediaApp:Music MediaApp:Photos MediaServer:Video MediaServer:Music MediaServer:Photos</Category>
     <WebUI>http://[IP]:[PORT:8080]/</WebUI>
     <TemplateURL/>
@@ -33,7 +33,9 @@ Configuration &#xD;&#xA;
     <Banner>https://raw.githubusercontent.com/OpenSageTV/sagetv-dockers/master/resources/SageTVOS_icon.png</Banner>
     <ExtraParams/>
     <Description>SageTV is an Open Source PVR and Media Player</Description>
-	<Changes>### 2.0.5
+	<Changes>### 2.0.6
+- ServerJ11 - fix for sage not starting on server 11
+### 2.0.5
 - ServerJ11 - moved JDK from 11.0.2 to 11.0.15 to resolve TLS 1.3 error
 - Note: other dockers were not changed
 ### 2.0.4
