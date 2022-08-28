@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+chmod -R 440 /etc/sudoers.d
+
 OPT_SETPERMS=${OPT_SETPERMS:-Y}
 
 if [ ${OPT_SETPERMS} != "Y" ] ; then

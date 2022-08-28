@@ -1,3 +1,5 @@
+### 2.0.7
+- Base - fix sudoers permission for all dockers
 ### 2.0.6
 - ServerJ11 - fix for sage not starting on server 11
 ### 2.0.5
